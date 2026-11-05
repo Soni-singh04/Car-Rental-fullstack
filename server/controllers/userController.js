@@ -26,7 +26,7 @@ export const registerUser = async (req,res) => {
         const hashedPassword = await bcrypt.hash(password, 10)
         const user = await User.create({name, email, password: hashedPassword})
         const token = generateToken(user._id.toString())
-        res.json({success: true, token})
+        res.json({success: true, token, message: "Account created successfully"})
 
     } catch (error){
         console.log(error.message);
@@ -48,7 +48,7 @@ export const loginUser = async (req, res)=> {
             return res.json({success: false, message: "Invalid Credentials"})
         }
         const token = generateToken(user._id.toString())
-        res.json({success: true, token})
+        res.json({success: true, token, message: "Logged in successfully"})
 
     } catch (error){
         console.log(error.message);
@@ -77,7 +77,3 @@ export const getCars = async (req, res) =>{
      res.json({success: false, message: error.message})
     }
 }
-
-
-
-

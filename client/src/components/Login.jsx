@@ -1,8 +1,8 @@
-
 import React from 'react'
 import { useAppContext } from '../context/AppContext'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { assets } from '../assets/assets'
 
 const Login = () => {
 
@@ -26,6 +26,8 @@ const Login = () => {
                 navigate('/')
                 setToken(data.token)
                 localStorage.setItem('token', data.token)
+                setShowLogin(false)
+                toast.success(data.message || (state === "login" ? "Logged in successfully" : "Account created successfully"))
             } else {
                 toast.error(data.message)
             }
@@ -40,7 +42,10 @@ const Login = () => {
 
             <form onSubmit={onSubmitHandler} onClick={(e) => e.stopPropagation()}
                 className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] 
-                rounded-lg shadow-xl border border-gray-200 bg-white">
+                rounded-lg shadow-xl border border-gray-200 bg-white relative">
+
+                <img onClick={() => setShowLogin(false)} src={assets.close_icon} alt="close" 
+                className="absolute top-5 right-5 cursor-pointer w-4 h-4 opacity-70 hover:opacity-100 transition-opacity" />
 
                 <p className="text-2xl font-medium m-auto">
                     <span className="text-primary">User</span> {state === "login" ?
